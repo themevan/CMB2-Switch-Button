@@ -29,3 +29,12 @@ if(!function_exists('create_your_metabox')){
   }
 }
 ```
+
+## Screenshot:
+
+<img src="https://github.com/themevan/CMB2-Switch-Button/blob/master/example_screenshot.gif" width="250" />
+
+## Follow us:
+- Website: https://www.themevan.com
+- Facebook: https://facebook.com/ThemeVan
+- Twitter: https://twitter.com/ThemeVan

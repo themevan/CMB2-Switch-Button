@@ -30,6 +30,17 @@ if(!function_exists('create_your_metabox')){
 }
 ```
 
+* The usage in the template as same as CMB2 checkbox field type:
+
+```php
+$test_meta = get_post_meta($post->ID, '_slug_metabox_id', true);
+
+if($test_meta){
+  //Do something when it's checked;
+}
+```
+
+
 ## Screenshot:
 
 <img src="https://github.com/themevan/CMB2-Switch-Button/blob/master/example_screenshot.gif" width="250" />

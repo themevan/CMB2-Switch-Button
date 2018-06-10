@@ -6,7 +6,7 @@ You can install it as a plugin, or include the main file into your theme or plug
 
 ## Usage:
 
-```
+```php
 add_action( 'cmb2_admin_init', 'create_your_metabox' );
 if(!function_exists('create_your_metabox')){
   function create_your_metabox(){

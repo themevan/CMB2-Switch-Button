@@ -24,7 +24,8 @@ if(!function_exists('create_your_metabox')){
         'name'             => esc_html__( 'Dynamically Load', 'text-domain' ),
         'id'               => $prefix . 'metabox_id',
         'desc'             => esc_html__('','text-domain'),
-        'type'	           => 'switch'
+        'type'	           => 'switch',
+        'default'          => 'on' //If it's checked by default 
     ) );
   }
 }

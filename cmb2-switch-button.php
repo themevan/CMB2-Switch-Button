@@ -2,51 +2,59 @@
 /*
 Plugin Name: CMB2 Switch Button
 Description: https://github.com/themevan/CMB2-Switch-Button/
-Version: 1.0
+Version: 1.1
 Author: ThemeVan
 Author URI: https://www.themevan.com
 License: GPL-2.0+
 */
-// Exit if accessed directly
-if( !defined( 'ABSPATH' ) ) exit;
-if( !class_exists( 'CMB2_Switch_Button' ) ) {
-    /**
-     * Class CMB2_Radio_Image
-     */
-    class CMB2_Switch_Button {
-        public function __construct() {
-            add_action( 'cmb2_render_switch', array( $this, 'callback' ), 10, 5 );
-            add_action( 'admin_head', array( $this, 'admin_head' ) );
-        }
-        public function callback($field, $escaped_value, $object_id, $object_type, $field_type_object) {
-           $field_name = $field->_name();
-           
-           $args = array(
-	           			'type'  => 'checkbox',
-	           			'id'	=> $field_name,
-	           			'name'  => $field_name,
-	           			'desc'	=> '',
-	           			'value' => 'on',
-	           		);
-           if($escaped_value == 'on'){
-           	  $args['checked'] = 'checked';
-           }
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
+	/**
+	 * Class CMB2_Radio_Image
+	 */
+	class CMB2_Switch_Button {
+		public function __construct() {
+			add_action( 'cmb2_render_switch', array( $this, 'callback' ), 10, 5 );
+			add_action( 'admin_head', array( $this, 'admin_head' ) );
+		}
+		public function callback( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
+			$field_name   = $field->_name();
+			$active_value = ! empty( $field->args( 'active_value' ) ) ? $field->args( 'active_value' ) : 'on';
 
-           echo '<label class="cmb2-switch">';
-           echo $field_type_object->input($args);
-           echo '<span class="cmb2-slider round"></span>';
-           echo '</label>';
-           $field_type_object->_desc( true, true );
-        }
+			$args = array(
+				'type'  => 'checkbox',
+				'id'    => $field_name,
+				'name'  => $field_name,
+				'desc'  => '',
+				'value' => $active_value,
+			);
+			if ( $escaped_value == $active_value ) {
+				$args['checked'] = 'checked';
+			}
 
-        public function admin_head() {
-            ?>
-        <style>
-        .cmb2-switch {
+			echo '<label class="cmb2-switch">';
+			echo $field_type_object->input( $args );
+			echo '<span class="cmb2-slider round"></span>';
+			echo '</label>';
+			$field_type_object->_desc( true, true );
+		}
+
+		public function admin_head() {
+			global $_wp_admin_css_colors;
+			if ( ! empty( $_wp_admin_css_colors[ get_user_option( 'admin_color' ) ] ) ) {
+				$scheme_colors = $_wp_admin_css_colors[ get_user_option( 'admin_color' ) ]->colors;
+			}
+			$toggle_color = ! empty( $scheme_colors ) ? end( $scheme_colors ) : '#2196F3';
+			?>
+		<style>
+		.cmb2-switch {
 				  position: relative;
 				  display: inline-block;
-				  width: 49px;
-				  height: 23px;
+				  width: 50px;
+				  height: 18px;
 				}
 
 				.cmb2-switch input {display:none;}
@@ -75,12 +83,17 @@ if( !class_exists( 'CMB2_Switch_Button' ) ) {
 				  transition: .4s;
 				}
 
+
+				#side-sortables .cmb-row .cmb2-switch + .cmb2-metabox-description {
+					padding-bottom: 0;
+				}
+
 				input:checked + .cmb2-slider {
-				  background-color: #2196F3;
+				  background-color: <?php echo $toggle_color ?>;
 				}
 
 				input:focus + .cmb2-slider {
-				  box-shadow: 0 0 1px #2196F3;
+				  box-shadow: 0 0 1px <?php echo $toggle_color ?>;
 				}
 
 				input:checked + .cmb2-slider:before {
@@ -97,9 +110,9 @@ if( !class_exists( 'CMB2_Switch_Button' ) ) {
 				.cmb2-slider.round:before {
 				  border-radius: 50%;
 				}
-        </style>
-        <?php
-        }
-    }
-    $cmb2_switch_button = new CMB2_Switch_Button();
+		</style>
+			<?php
+		}
+	}
+	$cmb2_switch_button = new CMB2_Switch_Button();
 }

@@ -62,6 +62,7 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 				.cmb2-slider {
 				  position: absolute;
 				  cursor: pointer;
+				  height: 23px;
 				  top: 0;
 				  left: 0;
 				  right: 0;
@@ -104,7 +105,7 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 
 				/* Rounded sliders */
 				.cmb2-slider.round {
-				  border-radius: 34px;
+				  border-radius: 11.5px;
 				}
 
 				.cmb2-slider.round:before {

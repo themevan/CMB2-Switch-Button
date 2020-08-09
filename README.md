@@ -25,15 +25,15 @@ if(!function_exists('create_your_metabox')){
         'id'               => $prefix . 'metabox_id',
         'desc'             => esc_html__('','text-domain'),
         'type'	           => 'switch',
-        'default'          => 'on' //If it's checked by default 
-        'active_value'     => 'on',
-        'inactive_value'   => 'off'
+        'default'          => true, //If it's checked by default 
+        'active_value'     => true,
+        'inactive_value'   => false
     ) );
   }
 }
 ```
 
-* The usage in the template as same as CMB2 checkbox field type:
+* If you set the active_value and inactive_value to a boolean value such as 1/0, true/false, just use it as below
 
 ```php
 $test_meta = get_post_meta($post->ID, '_slug_metabox_id', true);

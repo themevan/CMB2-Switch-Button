@@ -26,6 +26,8 @@ if(!function_exists('create_your_metabox')){
         'desc'             => esc_html__('','text-domain'),
         'type'	           => 'switch',
         'default'          => 'on' //If it's checked by default 
+        'active_value'     => 'on',
+        'inactive_value'   => 'off'
     ) );
   }
 }
@@ -39,6 +41,19 @@ $test_meta = get_post_meta($post->ID, '_slug_metabox_id', true);
 if($test_meta){
   //Do something when it's checked;
 }
+```
+
+* If you set the active_value and inactive_value to the specific value other than on/off, let's say enable/disable, you can use it as:
+
+```php
+$test_meta = get_post_meta($post->ID, '_slug_metabox_id', true);
+
+if($test_meta === 'enable'){
+  //Do something when it's checked;
+}else{
+  //Do something when it's unchecked;
+}
+
 ```
 
 

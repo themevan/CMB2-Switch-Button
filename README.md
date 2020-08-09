@@ -43,7 +43,7 @@ if($test_meta){
 }
 ```
 
-* If you set the active_value and inactive_value to the specific value other than on/off, let's say enable/disable, you can use it as:
+* If you set the active_value and inactive_value to the specific value other than the boolean value, let's say enable/disable, you can use it as:
 
 ```php
 $test_meta = get_post_meta($post->ID, '_slug_metabox_id', true);

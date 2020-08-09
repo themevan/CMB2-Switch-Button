@@ -2,7 +2,7 @@
 /*
 Plugin Name: CMB2 Switch Button
 Description: https://github.com/themevan/CMB2-Switch-Button/
-Version: 1.1
+Version: 1.2
 Author: ThemeVan
 Author URI: https://www.themevan.com
 License: GPL-2.0+
@@ -16,13 +16,15 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 	 * Class CMB2_Radio_Image
 	 */
 	class CMB2_Switch_Button {
+
 		public function __construct() {
 			add_action( 'cmb2_render_switch', array( $this, 'callback' ), 10, 5 );
 			add_action( 'admin_head', array( $this, 'admin_head' ) );
 		}
 		public function callback( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
 			$field_name   = $field->_name();
-			$active_value = ! empty( $field->args( 'active_value' ) ) ? $field->args( 'active_value' ) : 'on';
+			$active_value = null !== $field->args( 'active_value' ) ? ! empty( $field->args( 'active_value' ) ) ? $field->args( 'active_value' ) : 'on' : 'on';
+			$inactive_value = null !== $field->args( 'inactive_value' ) ? ! empty( $field->args( 'inactive_value' ) ) ? $field->args( 'inactive_value' ) : 'off' : 'off';
 
 			$args = array(
 				'type'  => 'checkbox',
@@ -31,14 +33,18 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 				'desc'  => '',
 				'value' => $active_value,
 			);
+
 			if ( $escaped_value == $active_value ) {
-				$args['checked'] = 'checked';
+				$args['checked'] = 'checked="checked"';
+			} else {
+				$args['checked'] = '';
 			}
 
-			echo '<label class="cmb2-switch">';
-			echo $field_type_object->input( $args );
-			echo '<span class="cmb2-slider round"></span>';
-			echo '</label>';
+			echo '<label class="cmb2-switch">
+				    <input type="checkbox" name="' . esc_attr( $args['name'] ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . esc_attr( $active_value ) . '" data-inactive-value="' . esc_attr( $inactive_value ) . '" ' . $args['checked'] . ' />
+				    <span class="cmb2-slider round"></span>
+			      </label>';
+
 			$field_type_object->_desc( true, true );
 		}
 
@@ -49,8 +55,25 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 			}
 			$toggle_color = ! empty( $scheme_colors ) ? end( $scheme_colors ) : '#2196F3';
 			?>
-		<style>
-		.cmb2-switch {
+				<script>
+					jQuery(document).ready(function($){
+						$('.cmb2-switch').each(function(){
+							var checkbox = $(this).find('input[type="checkbox"]');
+							var inactiveValue = checkbox.data('inactive-value');
+							var activeValue = checkbox.val();
+							$(this).on('click', function(){
+								if(checkbox.prop('checked')) {
+									checkbox.val(activeValue);
+								}else{
+									checkbox.val(inactiveValue);
+								}
+							});
+						});
+					});	
+				</script>
+				
+				<style>
+				.cmb2-switch {
 				  position: relative;
 				  display: inline-block;
 				  width: 50px;
@@ -74,10 +97,10 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 				.cmb2-slider:before {
 				  position: absolute;
 				  content: "";
-				  height: 17px;
-				  width: 17px;
-				  left: 3px;
-				  bottom: 3px;
+				  height: 14px;
+				  width: 14px;
+				  left: 2px;
+				  bottom: 2px;
 				  background-color: white;
 				  -webkit-transition: .4s;
 				  transition: .4s;
@@ -97,9 +120,9 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 				}
 
 				input:checked + .cmb2-slider:before {
-				  -webkit-transform: translateX(26px);
-				  -ms-transform: translateX(26px);
-				  transform: translateX(26px);
+				  -webkit-transform: translateX(32px);
+				  -ms-transform: translateX(32px);
+				  transform: translateX(32px);
 				}
 
 				/* Rounded sliders */
@@ -110,7 +133,7 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 				.cmb2-slider.round:before {
 				  border-radius: 50%;
 				}
-		</style>
+				</style>
 			<?php
 		}
 	}

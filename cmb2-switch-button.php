@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 	/**
-	 * Class CMB2_Radio_Image
+	 * Class CMB2_Switch_Button
 	 */
 	class CMB2_Switch_Button {
 

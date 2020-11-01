@@ -23,8 +23,8 @@ if ( ! class_exists( 'CMB2_Switch_Button' ) ) {
 		}
 		public function callback( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
 			$field_name   = $field->_name();
-			$active_value = null !== $field->args( 'active_value' ) ? ! empty( $field->args( 'active_value' ) ) ? $field->args( 'active_value' ) : 'on' : 'on';
-			$inactive_value = null !== $field->args( 'inactive_value' ) ? ! empty( $field->args( 'inactive_value' ) ) ? $field->args( 'inactive_value' ) : 'off' : 'off';
+			$active_value = null !== $field->args( 'active_value' ) ? ( ! empty( $field->args( 'active_value' ) ) ? $field->args( 'active_value' ) : 'on' ) : 'on';
+			$inactive_value = null !== $field->args( 'inactive_value' ) ? ( ! empty( $field->args( 'inactive_value' ) ) ? $field->args( 'inactive_value' ) : 'off' ) : 'off';
 
 			$args = array(
 				'type'  => 'checkbox',
